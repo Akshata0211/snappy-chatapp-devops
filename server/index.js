@@ -32,9 +32,13 @@ app.use("/api/messages", messageRoutes);
 const server = app.listen(process.env.PORT, () =>
   console.log(`Server started on ${process.env.PORT}`)
 );
+
+
+const socket_url=process.env.SOCKET_URL || "http://localhost:3000"
+
 const io = socket(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: `${socket_url}`,
     credentials: true,
   },
 });

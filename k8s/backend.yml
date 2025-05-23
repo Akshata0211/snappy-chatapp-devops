@@ -17,12 +17,14 @@ spec:
     spec:
       containers: 
         - name: backend-deploy
-          image: ak0211/chat-app-backend:v1
+          image: ak0211/chat-app-backend:v2
           ports:
           -  containerPort: 5000
           env:
             - name: MONGO_URL
               value: mongodb://db:27017/chat
+            - name: SOCKET_URL
+              value: http://frontend-service
 
 ---
 apiVersion: v1

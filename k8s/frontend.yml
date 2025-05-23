@@ -17,9 +17,14 @@ spec:
     spec:
       containers: 
         - name: frontend-deploy
-          image: ak0211/chat-app-frontend:v1
+          image: ak0211/chat-app-frontend:v2
           ports:
           -  containerPort: 3000
+          env:
+            - name: REACT_APP_BACKEND_URL
+              value: http://backend-service
+            - name: REACT_APP_LOCALHOST_KEY
+              value: "chat-app-current-user"
 
 ---
 apiVersion: v1
