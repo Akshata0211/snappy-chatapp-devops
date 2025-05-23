@@ -4,6 +4,7 @@ metadata:
   name: backend-deploy
   labels: 
     app: backend-deploy
+  namespace: chat-app
 spec:
   replicas: 1
   selector:
@@ -30,6 +31,7 @@ metadata:
   name: backend-service
   labels: 
     app: backend-service
+  namespace: chat-app
 spec:
   type: ClusterIP
   ports:

@@ -4,6 +4,7 @@ metadata:
   name: ingress
   labels:
     name: ingress
+  namespace: chat-app
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
