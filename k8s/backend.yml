@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deploy
+  labels: 
+    app: backend-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-deploy
+  template:
+    metadata:
+      labels: 
+        app: backend-deploy
+    spec:
+      containers: 
+        - name: backend-deploy
+          image: ak0211/chat-app-backend:v1
+          ports:
+          -  containerPort: 5000
+          env:
+            - name: MONGO_URL
+              value: mongodb://db:27017/chat
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+  labels: 
+    app: backend-service
+spec:
+  type: ClusterIP
+  ports:
+  - port: 5000
+    targetPort: 5000
+    #nodePort: 32001
+  selector:
+    app: backend-deploy

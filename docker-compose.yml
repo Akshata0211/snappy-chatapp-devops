@@ -1,0 +1,29 @@
+services:
+  frontend:
+    build: ./public
+    ports:
+      - 3000:3000
+    networks:
+      - ak
+  backend:
+    build: ./server
+    ports:
+      - 5000:5000
+    networks:
+      - ak
+  db:
+    image: mongo:6
+    container_name: mongo-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - ak
+
+networks:
+  ak:
+    external: true
+
+volumes:
+  mongo-data:
