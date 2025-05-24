@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend-deploy
-  labels: 
+  labels:
     app: frontend-deploy
   namespace: chat-app
 spec:
@@ -12,33 +12,32 @@ spec:
       app: frontend-deploy
   template:
     metadata:
-      labels: 
+      labels:
         app: frontend-deploy
     spec:
-      containers: 
-        - name: frontend-deploy
-          image: ak0211/chat-app-frontend:v2
-          ports:
-          -  containerPort: 3000
-          env:
-            - name: REACT_APP_BACKEND_URL
-              value: http://backend-service
-            - name: REACT_APP_LOCALHOST_KEY
-              value: "chat-app-current-user"
-
+      containers:
+      - name: frontend-deploy
+        image: ak0211/chat-app-frontend:v4
+        ports:
+        - containerPort: 3000
+        env:
+        - name: REACT_APP_BACKEND_URL
+          value: "http://chatapp.ak/api"
+        - name: REACT_APP_LOCALHOST_KEY
+          value: "chat-app-current-user"
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: frontend-service
-  labels: 
+  labels:
     app: frontend-service
   namespace: chat-app
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
   - port: 3000
     targetPort: 3000
-    #nodePort: 32000
+    nodePort: 30300
   selector:
     app: frontend-deploy

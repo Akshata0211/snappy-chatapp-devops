@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend-deploy
-  labels: 
+  labels:
     app: backend-deploy
   namespace: chat-app
 spec:
@@ -12,33 +12,34 @@ spec:
       app: backend-deploy
   template:
     metadata:
-      labels: 
+      labels:
         app: backend-deploy
     spec:
-      containers: 
-        - name: backend-deploy
-          image: ak0211/chat-app-backend:v2
-          ports:
-          -  containerPort: 5000
-          env:
-            - name: MONGO_URL
-              value: mongodb://db:27017/chat
-            - name: SOCKET_URL
-              value: http://frontend-service
-
+      containers:
+      - name: backend-deploy
+        image: ak0211/chat-app-backend:v2
+        ports:
+        - containerPort: 5000
+        env:
+        - name: MONGO_URL
+          value: "mongodb://db:27017/chat"
+        - name: PORT
+          value: "5000"
+        - name: SOCKET_URL
+          value: "http://chatapp.ak"
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: backend-service
-  labels: 
+  labels:
     app: backend-service
   namespace: chat-app
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
   - port: 5000
     targetPort: 5000
-    #nodePort: 32001
+    nodePort: 30500
   selector:
     app: backend-deploy
